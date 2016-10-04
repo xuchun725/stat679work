@@ -1,5 +1,6 @@
 # homework 1
 - all commands and scripts should be run in the directory `stat679work/hw1`
+
 ## data
 - copy the entire data directory (`log` and `out`) from `coursedata/hw1-snaqTimeTest` to `stat679sork/hw1` (in local repository)
 ```bash
@@ -10,10 +11,9 @@ cp -R ../../coursedata/hw1-snaqTimeTest/log ../../coursedata/hw1-snaqTimeTest/ou
 - untrack the data directories
 ```bash
 touch .gitignore
-echo log/ > .gitignore
-echo out/ >> .gitignore
+echo log/* > .gitignore
+echo out/* >> .gitignore
 ```
-
 
 
 ## scripts
@@ -30,6 +30,7 @@ echo out/ >> .gitignore
   - `CPUtime`: "Elapsed time" in `*.out`
 - usage: `bash summarizeSNaQres.sh`
 - result: `summary.csv`
+
 
 analysis | h | CPUtime |   
 ---------| --| --------
