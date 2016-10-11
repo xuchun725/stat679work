@@ -30,3 +30,10 @@ echo out/* >> .gitignore
   - `CPUtime`: "Elapsed time" in `*.out`
 - usage: `bash summarizeSNaQres.sh`
 - result: `summary.csv`
+
+
+| analysis | h | CPUtime |   
+| ---------| --| --------|
+| bT1      | 0 | 103354.760381735 |
+| net1_snaq | 1 | 11648.984309726 |  
+| ...      | ...| ... |
