@@ -10,3 +10,6 @@
 - exercise 2
   - submitted on Oct.3.2016
   - grep, cut, regular expression, pipeline, redirection
+- exercise 3
+  - submitted on Oct.11.2016
+  - grep, sed, basename, if, for, git tag, arithmetic expansion, test expression

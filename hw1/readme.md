@@ -36,3 +36,20 @@ echo out/* >> .gitignore
 - **feedback**:
   - In `csv` file, the comma is used to separate the columns. So there should be no extra space.
   - try to get much practice with `grep` and *extended regular expression*.
+- tag [v1.2](https://github.com/xuchun725/stat679work/releases/tag/v1.2)
+
+### exercise 3
+- ex3 will overwrite `summarizeSNaQres.sh` and `summary.csv` in ex2. To go back to ex2, click tag [v1.2](https://github.com/xuchun725/stat679work/releases/tag/v1.2).
+- to create a table in `csv` format to summarize the results of all these analysis in `log` and `out` with the same columns as before and additional columns for:
+  - `Nruns`: number of runs
+  - `Nfail`: tuning parameter, "max number of failed proposals"
+  - `fabs`: tuning parameter called "ftolAbs" in the log file (tolerated difference in the absolute value of the score function, to stop the search)
+  - `frel`: "ftolRel"
+  - `xabs`: "xtolAbs"
+  - `xrel`: "xtolRel"
+  - `seed`: main seed, i.e. seed for the first runs
+  - `under3460`: number of runs that returned a network with a score (-loglik value) better than (below) 3460
+  - `under3450`: number of runs with a network score under 3450
+  - `under3440`: number of runs with a network score under 3440
+- usage: `bash summarizeSNaQres.sh`
+- result: `summary.csv`  
