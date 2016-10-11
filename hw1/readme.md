@@ -21,9 +21,6 @@ echo out/* >> .gitignore
 - `normalizeFileNames.sh`
 - to change filenames in `log` and `out`, add `0` before `1-9` in filenames
 - usage: `bash normalizeFileNames.sh`
-- **feedback**: It's more conventional to use `timetes${x}_snaq.log` instead of `timetes"$X"_snaq.log`. About `${var}`:
-  - When expending the variable in a string, `{}` can protect the variable to be expanded from characters immediately following it. e.g.,  `${x}yz`, `$xyz`
-  - There is a lot that the shell can do with the notation ${x} for a variable named x. e.g., truncate the contents of a variable, make substitutions, use a default value, reference an array index, and so on.
 
 ### exercise 2
 - `summarizeSNaQres.sh`
@@ -33,6 +30,3 @@ echo out/* >> .gitignore
   - `CPUtime`: "Elapsed time" in `*.out`
 - usage: `bash summarizeSNaQres.sh`
 - result: `summary.csv`
-- **feedback**:
-  - In `csv` file, the comma is used to separate the columns. So there should be no extra space.
-  - try to get much practice with `grep` and *extended regular expression*.
