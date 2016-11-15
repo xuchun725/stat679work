@@ -3,11 +3,11 @@
 - python version: 3.5.2
 
 ## Data
-- waterTemperature.csv
-- energy.csv
+- [waterTemperature.csv](https://github.com/xuchun725/stat679work/blob/master/hw2/waterTemperature.csv)
+- [energy.csv](https://github.com/xuchun725/stat679work/blob/master/hw2/energy.csv)
 
 ## Script
-- merge.py
+- [merge.py](https://github.com/xuchun725/stat679work/blob/master/hw2/merge.py)
 
 ### Porpose
 create a python module `merge` that can be used to merge data from temperature file and energy file
@@ -25,7 +25,7 @@ create a python module `merge` that can be used to merge data from temperature f
 ## Usage
 ### run as a script in bash
 #### preparation
-- add shebang line `#!/usr/bin/env python`
+- add shebang line `#!/usr/bin/env python` at the beginning of `merge.py`
 - change the permission of the script file `chmod u+x ./merge.py`
 
 #### help message
@@ -89,10 +89,10 @@ help(merge.merge)
 Help on function merge in module merge:
 
 merge(temperatureFile, energyFile, outputFile='', append=False)
-    Merge data from temperature file and energy file.
+    Merge data from temperature file and energy file:
         keep all information in temperature file
-        match energy value to temperature value to the nearst time
-        devide energy values by 1000 and write them in an additional column
+        match the energy value for a particular time with the temperature value logged just before that time
+        divide energy values by 1000 and write them in an additional column
 
     Arguments:
         temperatureFile: csv format; 3 columns(#, Date Time, Temperature)
@@ -104,20 +104,21 @@ merge(temperatureFile, energyFile, outputFile='', append=False)
         Times in temperature file should be in ascending order;
         Times in energy file should be at midnight(00:00:00), GMT-05:00;
         If append = True, outputFile must be an existing file;
-        If append = False (default), outputFile can't be an existing file so that won't overwrite it.
+        If append = False, outputFile can't be an existing file so that won't overwrite it.
 
     Output:
-        csv format (5 columns):
-        #
-        Date Time
-        Temperature
-        Energy Produced (Wh)
-        Energy Produced (kWh)
-    directed to:
-        STDOUT: if outputFile="" and append = False (default)
-        a new csv file named by outputFile: if outputFile is a new file and append = False
-        append to an existing file outputFile: if outputFile is an existing file and append = True
+      csv format (5 columns):
+          #
+          Date Time
+          Temperature
+          Energy Produced (Wh)
+          Energy Produced (kWh)
+      directed to:
+          STDOUT: if outputFile="" and append = False (default)
+          a new csv file named by outputFile: if outputFile is a new file and append = False
+          append to an existing file outputFile: if outputFile is an existing file and append = True
 (END)
+
 ```
 
 #### example
@@ -135,4 +136,4 @@ merge.merge('waterTemperature.csv', 'energy.csv', 'output.csv', append=True)
 ```
 
 ## Results
-- output.csv
+- [output.csv](https://github.com/xuchun725/stat679work/blob/master/hw2/output.csv)
