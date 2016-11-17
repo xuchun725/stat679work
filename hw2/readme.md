@@ -9,7 +9,7 @@
 ## Script
 - [merge.py](https://github.com/xuchun725/stat679work/blob/master/hw2/merge.py)
 
-### Porpose
+### Purpose
 create a python module `merge` that can be used to merge data from temperature file and energy file
   - keep all information in temperature file
   - match the energy value for a particular time with the temperature value logged just before that time
