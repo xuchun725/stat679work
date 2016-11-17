@@ -74,11 +74,8 @@ def merge(temperatureFile, energyFile, outputFile="", append=False):
             new[j-1] = value_e[i]
 
     # devide energy value by 1000:
-    new2 = ['' for i in range(len(new))]
-    index = [new.index(energy) for energy in new if energy]
-    for i in index:
-        new2[i] = str(float(new[i])/1000)
-
+    new2 = [str(float(i)/1000) if i else '' for i in new]
+    
     # re-construct the time format:
     time_new = [time.strftime('%Y-%m-%d %H:%M:%S', i) for i in t_temp]
 
