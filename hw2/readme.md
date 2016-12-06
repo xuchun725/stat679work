@@ -16,17 +16,34 @@ create a python module `merge` that can be used to merge data from temperature f
   - divide energy values by 1000 and write them in an additional column
 
 ### Features
+
 - **check assumptions** (if violated, an error message will be displayed)
   - times in temperature file should be in ascending order
   - times in energy file should be at midnight(00:00:00), Wisconsin time(GMT-05:00)
 - be safe for user: **not overwriting** existing files unintentionally
 - have an option to **append** to an existing file
 
+Other assumptions:
+
+- the water temperature file has 2 header lines. In the example provided, these lines look like this:
+
+    "Plot Title: 10679014 jackson July29"
+    "#","Date Time, GMT-05:00","K-Type, °F (LGR S/N: 10679014, SEN S/N: 10679014, LBL: water pipe)"
+
+- the energy file is assumed to have a one-line header
+- the last line in the energy file is ignored:
+  it looks like this in the example provided:
+
+    Total,139935
+
+
 ## Usage
 ### run as a script in bash
 #### preparation
-- add shebang line `#!/usr/bin/env python` at the beginning of `merge.py`
-- change the permission of the script file `chmod u+x ./merge.py`
+- the script `merge.py` starts with this shebang line `#!/usr/bin/env python`
+  so that it can be executed with `./merge.py` at the shell prompt
+- change the permission of the script file to be executable:
+  `chmod u+x ./merge.py`
 
 #### help message
 ```shell
@@ -62,8 +79,9 @@ optional arguments:
 ```
 
 #### examples
-- standard output
+- to send the output to the screen (or "standard output"), either will work:
 ```shell
+python merge.py -t waterTemperature.csv -e energy.csv
 ./merge.py -t waterTemperature.csv -e energy.csv
 ```
 - create a new file to store the results

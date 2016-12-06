@@ -47,11 +47,14 @@ def merge(temperatureFile, energyFile, outputFile="", append=False):
     # read temperature file into 3 vectors & read energy file into 2 vectors:
     with open(temperatureFile, 'r', encoding = 'utf-8') as temp:
         lines = [line.rstrip() for line in temp if line != '\n'][2:]
+        # the line above assumes 2 lines for the header in the temperature file.
+        # change [2:] to [1:] at the end of the previous line (49) if only 1-line header
         num = [line.split(',')[0] for line in lines]
         time_temp = [line.split(',')[1] for line in lines]
         value_t = [line.split(',')[2] for line in lines]
     with open(energyFile, 'r') as energy:
         lines = [line.rstrip() for line in energy if line != '\n'][1:-1]
+        # above: skips 1-line header and skips last line too, for "Total"
         time_e = [i.split(',')[0] for i in lines]
         value_e = [i.split(',')[1] for i in lines]
 
@@ -75,7 +78,7 @@ def merge(temperatureFile, energyFile, outputFile="", append=False):
 
     # devide energy value by 1000:
     new2 = [str(float(i)/1000) if i else '' for i in new]
-    
+
     # re-construct the time format:
     time_new = [time.strftime('%Y-%m-%d %H:%M:%S', i) for i in t_temp]
 
@@ -91,7 +94,7 @@ def merge(temperatureFile, energyFile, outputFile="", append=False):
             with open(outputFile,  'x') as f:
                 f.write(out)
     else:
-        sys.stderr.write(out)
+        sys.stdout.write(out)
 
 # execute only if run as a script:
 if __name__ == "__main__":
