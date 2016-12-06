@@ -27,8 +27,8 @@ Other assumptions:
 
 - the water temperature file has 2 header lines. In the example provided, these lines look like this:
 
-    "Plot Title: 10679014 jackson July29"
-    "#","Date Time, GMT-05:00","K-Type, °F (LGR S/N: 10679014, SEN S/N: 10679014, LBL: water pipe)"
+        "Plot Title: 10679014 jackson July29"
+        "#","Date Time, GMT-05:00","K-Type, °F (LGR S/N: 10679014, SEN S/N: 10679014, LBL: water pipe)"
 
 - the energy file is assumed to have a one-line header
 - the last line in the energy file is ignored:
