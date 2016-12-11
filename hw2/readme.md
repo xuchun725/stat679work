@@ -1,25 +1,31 @@
-# howmework 2
+# homework 2
+
 - all the codes / commands should be run in `stat679work/hw2/`
 - python version: 3.5.2
 
 ## Data
-- [waterTemperature.csv](https://github.com/xuchun725/stat679work/blob/master/hw2/waterTemperature.csv)
-- [energy.csv](https://github.com/xuchun725/stat679work/blob/master/hw2/energy.csv)
+
+two files in the `data` folder, both in csv format:
+
+- [water temperature](data/201608waterTemperature.csv)
+- [energy](data/201608energy.csv)
 
 ## Script
+
 - [merge.py](https://github.com/xuchun725/stat679work/blob/master/hw2/merge.py)
 
-### Purpose
-create a python module `merge` that can be used to merge data from temperature file and energy file
-  - keep all information in temperature file
+The python module `merge` can be used to merge data from a temperature
+file (hourly records) and an energy file (daily records). It aims to:
+
+  - keep all information in the temperature file
   - match the energy value for a particular time with the temperature value logged just before that time
-  - divide energy values by 1000 and write them in an additional column
+  - divide energy values by 1000 (to convert Wh into kWh) and write them in an additional column
 
 ### Features
 
 - **check assumptions** (if violated, an error message will be displayed)
   - times in temperature file should be in ascending order
-  - times in energy file should be at midnight(00:00:00), Wisconsin time(GMT-05:00)
+  - times in energy file should be at midnight (00:00:00), Wisconsin time (GMT-06:00 or GMT-05:00 for daylight saving)
 - be safe for user: **not overwriting** existing files unintentionally
 - have an option to **append** to an existing file
 
@@ -34,18 +40,24 @@ Other assumptions:
 - the last line in the energy file is ignored:
   it looks like this in the example provided:
 
-    Total,139935
+      Total,139935
 
 
 ## Usage
-### run as a script in bash
+
+### run as a script in the shell
+
 #### preparation
+
 - the script `merge.py` starts with this shebang line `#!/usr/bin/env python`
   so that it can be executed with `./merge.py` at the shell prompt
 - change the permission of the script file to be executable:
   `chmod u+x ./merge.py`
 
-#### help message
+#### script usage
+
+to get help, type this in the shell:
+
 ```shell
 ./merge.py --help
 ```
@@ -57,7 +69,7 @@ Merge data from temperature file and energy file (both in csv format). Assume
 the temperature file has 3 columns representing "#", "Date Time",
 "Temperature" and the energy file has 2 columns representing "Date Time",
 "Energy Produced(Wh)". Times in temperature file should be in ascending order
-and times in energy file should be at midnight(00:00:00, GMT-05:00), otherwise
+and times in energy file should be at midnight (00:00:00, GMT-05:00 (daylight savings) or GMT-06:00), otherwise
 an error message will be displayed. All information in temperature file will
 be kept, the energy value for a particular time will be matched with the
 temperature value logged just before that time, energy values will be dicided
@@ -79,26 +91,39 @@ optional arguments:
 ```
 
 #### examples
+
 - to send the output to the screen (or "standard output"), either will work:
+
 ```shell
-python merge.py -t waterTemperature.csv -e energy.csv
-./merge.py -t waterTemperature.csv -e energy.csv
+python merge.py -t data/201608waterTemperature.csv -e data/201608energy.csv
+./merge.py -t data/201608waterTemperature.csv -e data/201608energy.csv
 ```
-- create a new file to store the results
+<!--
+python merge.py -t data/oct8antifreeze2.csv -e data/oct8energy.csv
+-->
+
+- to create a new file "output.csv" with the results:
+
 ```shell
-./merge.py -t waterTemperature.csv -e energy.csv -o output.csv
-```
-- append results to an existing file
-```shell
-./merge.py -t waterTemperature.csv -e energy.csv -o output.csv --append
+./merge.py -t data/201608waterTemperature.csv -e data/201608energy.csv -o output.csv
 ```
 
+- to append the results to an existing file "output.csv":
+
+```shell
+./merge.py -t data/201608waterTemperature.csv -e data/201608energy.csv -o output.csv --append
+```
 
 ### inside a python session as a module
+
+import the package:
+
 ```python
 import merge
 ```
-#### help message
+
+get info on the package:
+
 ```python
 help(merge.merge)
 ```
@@ -113,14 +138,14 @@ merge(temperatureFile, energyFile, outputFile='', append=False)
         divide energy values by 1000 and write them in an additional column
 
     Arguments:
-        temperatureFile: csv format; 3 columns(#, Date Time, Temperature)
-        energyFile: csv format; 2 columns(Date/Time, Energy Produced (Wh))
+        temperatureFile: csv format; 3 columns (#, Date Time, Temperature)
+        energyFile: csv format; 2 columns (Date/Time, Energy Produced in Wh)
         ourputFile: the output file name; default: STDOUT
         append: whether append output to an existing file; default: False
 
     Assumptions: (if violated, an error message will be displayed)
         Times in temperature file should be in ascending order;
-        Times in energy file should be at midnight(00:00:00), GMT-05:00;
+        Times in energy file should be at midnight (00:00:00), GMT-05:00 (daylight savings) or GMT-06:00;
         If append = True, outputFile must be an existing file;
         If append = False, outputFile can't be an existing file so that won't overwrite it.
 
@@ -136,22 +161,18 @@ merge(temperatureFile, energyFile, outputFile='', append=False)
           a new csv file named by outputFile: if outputFile is a new file and append = False
           append to an existing file outputFile: if outputFile is an existing file and append = True
 (END)
-
 ```
 
-#### example
-- standard output
+usage examples:
+
 ```python
-merge.merge('waterTemperature.csv', 'energy.csv')
-```
-- create a new file to store the results
-```python
+merge.merge('waterTemperature.csv', 'energy.csv') # result sent to standard output
+# create a new file "output.csv" to store the results:
 merge.merge('waterTemperature.csv', 'energy.csv', 'output.csv')
-```
-- append results to an existing file
-```python
+# append results to "output.csv":
 merge.merge('waterTemperature.csv', 'energy.csv', 'output.csv', append=True)
 ```
 
 ## Results
+
 - [output.csv](https://github.com/xuchun725/stat679work/blob/master/hw2/output.csv)

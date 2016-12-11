@@ -14,14 +14,14 @@ def merge(temperatureFile, energyFile, outputFile="", append=False):
         divide energy values by 1000 and write them in an additional column
 
     Arguments:
-        temperatureFile: csv format; 3 columns(#, Date Time, Temperature)
-        energyFile: csv format; 2 columns(Date/Time, Energy Produced (Wh))
+        temperatureFile: csv format; 3 columns (#, Date Time, Temperature)
+        energyFile: csv format; 2 columns (Date/Time, Energy Produced in Wh)
         ourputFile: the output file name; default: STDOUT
         append: whether append output to an existing file; default: False
 
     Assumptions: (if violated, an error message will be displayed)
         Times in temperature file should be in ascending order;
-        Times in energy file should be at midnight(00:00:00), GMT-05:00;
+        Times in energy file should be at midnight (00:00:00), GMT-05:00 (daylight savings) or GMT-06:00;
         If append = True, outputFile must be an existing file;
         If append = False, outputFile can't be an existing file so that won't overwrite it.
 
@@ -63,7 +63,8 @@ def merge(temperatureFile, energyFile, outputFile="", append=False):
     t_e = [time.strptime(time_e[i], '%Y-%m-%d %H:%M:%S %z') for i in range(len(time_e))]
     assert sorted([time.mktime(i) for i in t_temp]) == [time.mktime(i) for i in t_temp], "Dates and times in temperature file should be in ascending order."
     assert all([i.tm_hour==0 and i.tm_min==0 and i.tm_sec==0 for i in t_e]), "Times in energy file should be at midnight(00:00:00)."
-    assert all([i.tm_gmtoff==-18000 for i in t_e]), "Time zone in energy file should be GMT-05:00."
+    assert all([i.tm_gmtoff==-18000 or i.tm_gmtoff==-21600 for i in t_e]), "Time zone in energy file should be GMT-05:00 (daylight savings) or GMT-06:00."
+    # 18000 seconds = 5h, 21600 seconds = 6h
 
     # match the energy value for a particular time with the temperature value logged just before that time
     new = ['' for i in range(len(t_temp))]
@@ -83,7 +84,7 @@ def merge(temperatureFile, energyFile, outputFile="", append=False):
     time_new = [time.strftime('%Y-%m-%d %H:%M:%S', i) for i in t_temp]
 
     # output:
-    header = '#,Date Time (GMT-05:00),Temperature,Energy Produced(Wh),Energy Produced(kWh)\n'
+    header = '#,Date Time,Temperature,Energy Produced(Wh),Energy Produced(kWh)\n'
     data = [','.join([num[i], time_new[i], value_t[i], new[i], new2[i]]) for i in range(len(num))]
     out = header+'\n'.join(data)+'\n'
     if outputFile:
@@ -103,7 +104,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description = """Merge data from temperature file and energy file (both in csv format).
     Assume the temperature file has 3 columns representing "#", "Date Time", "Temperature"
     and the energy file has 2 columns representing "Date Time", "Energy Produced(Wh)".
-    Times in temperature file should be in ascending order and times in energy file should be at midnight(00:00:00, GMT-05:00),
+    Times in temperature file should be in ascending order and times in energy file should be at midnight (00:00:00, GMT-05:00 (daylight savings) or GMT-06:00),
     otherwise an error message will be displayed.
     All information in temperature file will be kept, the energy value for a particular time will be matched with the temperature value logged just before that time,
     energy values will be dicided by 1000 and written in an additional column.
