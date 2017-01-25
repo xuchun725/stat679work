@@ -2,6 +2,91 @@
 
 - all the codes / commands should be run in `stat679work/hw2/`
 - python version: 3.5.2
+- jump to explanations below on the [script](#script) and script [usage](#usage)
+
+# Getting python
+
+follow instructions to install Python with Anaconda
+from [software carpentry](http://uw-madison-aci.github.io/2016-06-08-uwmadison/#python).
+For Mac OS X, these instructions basically direct you to Anaconda
+[downloads](https://www.continuum.io/downloads).
+Make sure to choose python 3.5 and not Python 2.7.
+Anaconda installs Python, a pre-defined (large) set of Python packages,
+and the conda package management system
+(such as to easily install new packages in the future).
+
+If you need to use Python 2 for other purposes, (Ana)conda
+lets you switch between Python 2 and 3 very easily.
+From a basic installation of Anaconda with Python 3.5,
+conda has a single "environment", named "root", which runs
+python 3.5:
+
+```
+$ python --version
+Python 3.5.2 :: Anaconda 4.2.0 (x86_64)
+
+$ conda info -e
+# conda environments:
+#
+root                  *  /Users/ane/anaconda
+```
+
+To install Python 2.7 and its packages, simply ask conda
+to create a new environment that runs python 2.7. The command
+below names this new environment "python2":
+
+```
+conda create -n python2 python=2.7 anaconda
+```
+
+When we ask conda for information on its environments,
+we see that "python2" appeared, but the star is still on "root",
+meaning that if we currently call Python, it will use python 3.5:
+
+```
+$ conda info -e
+# conda environments:
+#
+python2                  /Users/ane/anaconda/envs/python2
+root                  *  /Users/ane/anaconda
+
+$ python --version
+Python 3.5.2 :: Anaconda 4.2.0 (x86_64)
+```
+
+To activate our new environment and run python 2.7, use:
+
+```
+$ source activate python2
+(python2) $
+(python2) $ python --version
+Python 2.7.12 :: Anaconda 4.2.0 (x86_64)
+(python2) $
+```
+
+This change only affects the current terminal.
+Now if we ask conda for information about its environments,
+we see our 2 environments as before, one for python 2.7 (python2)
+and one for python 3.5 (root).
+The star is on python2 because it's the one being used now:
+
+```
+(python2) $ conda info -e
+# conda environments:
+#
+python2               *  /Users/ane/anaconda/envs/python2
+root                     /Users/ane/anaconda
+```
+
+To switch back to python 3.5 in the same shell session,
+we can deactivate our "python2" environment:
+
+```
+(python2) $ source deactivate python2
+$ python --version
+Python 3.5.2 :: Anaconda 4.2.0 (x86_64)
+```
+
 
 ## Data
 
